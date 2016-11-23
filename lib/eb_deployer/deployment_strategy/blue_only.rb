@@ -30,6 +30,11 @@ module EbDeployer
         active_ebenv.swap_cname_with(inactive_ebenv)
       end
 
+      def destroy_inactive
+        inactive_ebenv = ebenvs.reject(&method(:active_ebenv?)).first
+        inactive_ebenv.terminate unless inactive_ebenv.nil?
+      end
+
       private
       def active_ebenv?(ebenv)
         ebenv.cname_prefix == @component.cname_prefix

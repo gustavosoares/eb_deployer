@@ -40,6 +40,12 @@ module EbDeployer
       end
     end
 
+    def destroy_inactive
+      components_to_deploy.each do |component|
+        component.destroy_inactive
+      end
+    end
+
     def components=(components_attrs)
       return unless components_attrs
       @components = components_attrs.map do |attrs|

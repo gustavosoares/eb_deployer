@@ -66,6 +66,26 @@ class BlueOnlyDeployTest < DeployTest
     assert !@eb.environment_exists?('simple', t('production-b', 'simple'))
   end
 
+  def test_destroy_should_clean_up_inactive_env
+    [42, 44].each do |version|
+      do_deploy(version)
+    end
+
+    destroy_inactive(:application => 'simple', :environment => 'production', :strategy => 'blue-only')
+    assert @eb.environment_exists?('simple', t('production-a', 'simple'))
+    assert !@eb.environment_exists?('simple', t('production-b', 'simple'))
+  end
+
+  def test_destroy_should_not_clean_up_inactive_env_when_there_is_only_one_env
+    [42].each do |version|
+      do_deploy(version)
+    end
+
+    destroy_inactive(:application => 'simple', :environment => 'production', :strategy => 'blue-only')
+    assert @eb.environment_exists?('simple', t('production-a', 'simple'))
+
+  end
+
   #swap test
   def test_blue_only_deployment_swap
     do_deploy(42)

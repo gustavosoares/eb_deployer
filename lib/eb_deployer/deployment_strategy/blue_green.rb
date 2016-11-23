@@ -62,6 +62,10 @@ module EbDeployer
         raise "Blue green deployment does not support swapping."
       end
 
+      def destroy_inactive
+        raise "Blue green deployment does not support destroying inactive elasticbeanstalk environment."
+      end
+
       private
       def active_ebenv?(ebenv)
         ebenv.cname_prefix == @component.cname_prefix

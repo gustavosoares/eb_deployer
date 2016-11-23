@@ -16,6 +16,10 @@ module EbDeployer
         raise "InplaceUpdate deployment does not support swapping."
       end
 
+      def destroy_inactive
+        raise "Inplace deployment does not support destroying inactive elasticbeanstalk environment."
+      end
+
     end
   end
 end

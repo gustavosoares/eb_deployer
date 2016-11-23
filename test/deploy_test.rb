@@ -40,6 +40,10 @@ class DeployTest < Test::Unit::TestCase
     EbDeployer.destroy(opts.merge(stubs))
   end
 
+  def destroy_inactive(opts)
+    EbDeployer.destroy_inactive(opts.merge(stubs))
+  end
+
   def stubs
     { :bs_driver => @eb,
       :s3_driver => @s3_driver,
