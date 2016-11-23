@@ -24,6 +24,12 @@ module EbDeployer
         inactive_ebenv.deploy(version_label, env_settings)
       end
 
+      def swap
+        active_ebenv = ebenvs.detect(&method(:active_ebenv?))
+        inactive_ebenv = ebenvs.reject(&method(:active_ebenv?)).first
+        active_ebenv.swap_cname_with(inactive_ebenv)
+      end
+
       private
       def active_ebenv?(ebenv)
         ebenv.cname_prefix == @component.cname_prefix

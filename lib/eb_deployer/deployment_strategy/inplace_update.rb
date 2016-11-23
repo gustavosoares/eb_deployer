@@ -11,6 +11,11 @@ module EbDeployer
       def deploy(version_label, env_settings, inactive_settings)
         @component.new_eb_env.deploy(version_label, env_settings)
       end
+
+      def swap
+        raise "InplaceUpdate deployment does not support swapping."
+      end
+
     end
   end
 end

@@ -16,6 +16,11 @@ module EbDeployer
       @strategy.deploy(version_label, eb_settings, inactive_settings)
     end
 
+    def swap
+      @strategy.test_compatibility(@creation_opts)
+      @strategy.swap
+    end
+
     def new_eb_env(suffix=nil, cname_prefix_overriding=nil)
       EbEnvironment.new(@env.app_name,
                         [@env.name, suffix].compact.join('-'),

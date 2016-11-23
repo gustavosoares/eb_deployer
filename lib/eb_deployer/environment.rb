@@ -34,6 +34,12 @@ module EbDeployer
       end
     end
 
+    def swap
+      components_to_deploy.each do |component|
+        component.swap
+      end
+    end
+
     def components=(components_attrs)
       return unless components_attrs
       @components = components_attrs.map do |attrs|

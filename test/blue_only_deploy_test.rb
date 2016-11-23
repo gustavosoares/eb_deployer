@@ -66,6 +66,18 @@ class BlueOnlyDeployTest < DeployTest
     assert !@eb.environment_exists?('simple', t('production-b', 'simple'))
   end
 
+  #swap test
+  def test_blue_only_deployment_swap
+    do_deploy(42)
+    assert_equal 'simple-production',  @eb.environment_cname_prefix('simple', t('production-a', 'simple'))
+    assert_nil(@eb.environment_cname_prefix('simple', t('production-b', 'simple')))
+    do_deploy(43)
+    assert_equal 'simple-production',  @eb.environment_cname_prefix('simple', t('production-a', 'simple'))
+    assert_match(/simple-production-inactive/,  @eb.environment_cname_prefix('simple', t('production-b', 'simple')))
+    do_swap
+    assert_match(/simple-production-inactive/,  @eb.environment_cname_prefix('simple', t('production-a', 'simple')))
+  end
+
   private
 
   def do_deploy(version_label, options={})
@@ -73,6 +85,13 @@ class BlueOnlyDeployTest < DeployTest
               :environment => "production",
               :strategy => 'blue-only',
             }.merge(options).merge(:version_label => version_label))
+  end
+
+  def do_swap
+    swap( {:application => 'simple',
+             :environment => "production",
+             :strategy => 'blue-only',
+            })
   end
 
 end

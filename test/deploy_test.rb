@@ -29,6 +29,13 @@ class DeployTest < Test::Unit::TestCase
                         :version_label => 1}.merge(opts).merge(stubs))
   end
 
+  def swap(opts)
+    @eb.mark_all_envs_ready
+    EbDeployer.swap({:package => @sample_package,
+                       :strategy => :'inplace-update',
+                       :version_label => 1}.merge(opts).merge(stubs))
+  end
+
   def destroy(opts)
     EbDeployer.destroy(opts.merge(stubs))
   end

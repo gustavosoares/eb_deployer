@@ -58,6 +58,10 @@ module EbDeployer
         end
       end
 
+      def swap
+        raise "Blue green deployment does not support swapping."
+      end
+
       private
       def active_ebenv?(ebenv)
         ebenv.cname_prefix == @component.cname_prefix
